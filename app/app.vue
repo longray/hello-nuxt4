@@ -1,6 +1,19 @@
+<script setup>
+const message = ref('Nuxt')
+
+function hello() {
+   sayHello(message.value)
+}
+</script>
+
 <template>
-  <div>
-    <!-- Markup shared across all pages, ex: NavBar -->
-    <NuxtPage />
-  </div>
+    <h1>Demo with auto imports</h1>
+    <form class="flex gap-2" @submit.prevent="hello">
+
+      <CustomInput v-model="message" />
+      <UButton type="submit">
+        Hello
+      </UButton>
+    </form>
+
 </template>
