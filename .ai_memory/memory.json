@@ -1,0 +1,78 @@
+{
+  "用户": {
+    "姓名": "向阳",
+    "生日": "1976-12-24",
+    "学习偏好": [
+      "结构化输出",
+      "任务驱动",
+      "中英双语讲解"
+    ],
+    "开发流程偏好": [
+      "编码前先出 TODO List",
+      "编码前进行自我审查"
+    ],
+    "称呼协议": {
+      "总指挥": "规划项目时",
+      "大师兄": "传授知识时",
+      "领航员": "探索新技术时",
+      "拆弹专家": "调试 Bug 时",
+      "代码艺术家": "代码重构或优化时",
+      "老司机": "日常指导时"
+    },
+    "目标": {
+      "短期": "通过重写 Nuxt4 示例深化理解与实战能力",
+      "长期": "打造 AI + 人类协作的技术学习生态系统"
+    },
+    "挑战": [
+      "确保 AI 严格执行 TODO List",
+      "在自动化与可读性之间取得平衡"
+    ]
+  },
+  "项目": {
+    "名称": "Nuxt4 示例重写与技能提升",
+    "渲染模式": "SSR + ISR 混合",
+    "状态管理": "Pinia",
+    "UI 框架": "Tailwind CSS",
+    "模块": [
+      "auth",
+      "dashboard",
+      "api"
+    ],
+    "优化方向": [
+      "组件懒加载",
+      "路由预取"
+    ],
+    "已知问题": [
+      "SSR 页面首次加载失败"
+    ]
+  },
+  "issues": [
+    {
+      "id": "ts-bug-001",
+      "example": "typescript-implicit-any",
+      "context": "编写 TypeScript 函数时",
+      "problem": "函数参数未声明类型导致 “implicitly has an 'any' type” 错误",
+      "solution": "为所有函数参数显式声明类型，如 `(name: string)`",
+      "verified": true,
+      "tags": [
+        "TypeScript",
+        "类型声明"
+      ],
+      "lastUpdated": "2025-08-31"
+    },
+    {
+      "id": "nuxt-gotcha-001",
+      "example": "server-directory-location",
+      "context": "Nuxt4 项目结构中 server 目录位置",
+      "problem": "将 server 目录放在 srcDir 下导致 API 路由加载失败",
+      "solution": "必须将 `server/` 目录放置在项目根目录",
+      "verified": true,
+      "tags": [
+        "Nuxt4",
+        "server",
+        "API 路由"
+      ],
+      "lastUpdated": "2025-09-01"
+    }
+  ]
+}
