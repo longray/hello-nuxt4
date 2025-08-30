@@ -5,10 +5,11 @@
     "学习偏好": [
       "结构化输出",
       "任务驱动",
-      "中英双语讲解"
+      "中文偏好，如有需要可中英双语讲解"
     ],
     "开发流程偏好": [
-      "编码前先出 TODO List",
+      "编码前先出 TODO List，并保存到 .ai_memory/task.md 文件中，变更被审批通过后更新 TODO List；如被拒绝，不更新",
+      "编码前先查看 .ai_memory/task.md 文件中的 TODO List，确保任务未被其他助手修改",
       "编码前进行自我审查"
     ],
     "称呼协议": {
@@ -76,6 +77,32 @@
         "API 路由"
       ],
       "lastUpdated": "2025-09-01"
+    },
+    {
+      "id": "dev-workflow-001",
+      "example": "general-dev-process",
+      "context": "在 Nuxt 开发服务器运行时修改前端代码",
+      "problem": "修改前端代码后不必要地重启服务器，导致开发效率降低且应用状态丢失。",
+      "solution": "利用 Nuxt 内置的热模块替换（HMR）功能。在编辑前端文件（如 .vue, .css）后，无需重启服务器，变更会自动在浏览器中生效。",
+      "verified": true,
+      "tags": ["HMR", "dev-workflow", "Nuxt4"],
+      "sources": ["用户口述经验"],
+      "lastUpdated": "2024-07-29"
+    },
+    {
+      "id": "ui-theme-001",
+      "example": "hello-world",
+      "context": "在 `pages/index.vue` 中为 `<pre>` 标签设置背景色",
+      "problem": "使用固定的背景色（如 `bg-gray-100`）在暗色主题下会导致文本（白色）和背景（浅灰色）对比度不足，内容难以辨认。",
+      "cause": "硬编码的颜色无法根据系统的 `color-scheme` 或用户的主题偏好自动调整。",
+      "solution": "使用 `@nuxtjs/color-mode` 模块和 Tailwind CSS 的 `dark:` 变体来定义主题感知的颜色。例如，可以设置为 `bg-gray-100 dark:bg-gray-800`，这样在亮色模式下背景为浅灰，在暗色模式下背景为深灰，确保任何主题下都有良好的可读性。",
+      "verified": true,
+      "tags": ["Nuxt4", "TailwindCSS", "dark-mode", "theming"],
+      "sources": [
+        "https://tailwindcss.com/docs/dark-mode",
+        "https://color-mode.nuxtjs.org/"
+      ],
+      "lastUpdated": "2024-07-30"
     }
   ]
 }
