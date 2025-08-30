@@ -103,6 +103,17 @@
         "https://color-mode.nuxtjs.org/"
       ],
       "lastUpdated": "2024-07-30"
+    },
+    {
+      "id": "workflow-rule-001",
+      "example": "all",
+      "context": "在开始一个新的 Nuxt 示例之前",
+      "problem": "上一个示例的残留文件（如页面、API 路由、组件）可能会对新示例产生非预期的影响，干扰新功能的验证和学习。",
+      "solution": "在开始每个新示例之前，执行‘清理房间’操作：删除 `pages/`, `server/api/`, `components/`, `layouts/` 等目录中与上一个示例相关的文件。保持工作区的整洁，确保每个示例都在一个干净、隔离的环境中进行。",
+      "verified": true,
+      "tags": ["workflow", "best-practice", "project-setup"],
+      "sources": ["用户口述经验"],
+      "lastUpdated": "2024-07-30"
     }
   ]
 }
