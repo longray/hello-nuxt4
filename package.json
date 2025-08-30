@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.4",
     "@nuxt/eslint": "1.9.0",
     "@nuxt/test-utils": "3.19.2",
     "eslint": "^9.34.0",
