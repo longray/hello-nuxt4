@@ -114,6 +114,26 @@
       "tags": ["workflow", "best-practice", "project-setup"],
       "sources": ["用户口述经验"],
       "lastUpdated": "2024-07-30"
+    },
+    {
+      "id": "meta-template-001",
+      "example": "meta-tags-with-template",
+      "context": "在 Nuxt4 中同时使用全局 titleTemplate 和页面的 meta 信息",
+      "problem": "使用 `definePageMeta` 设置的页面 `title` 无法与 `nuxt.config.ts` 中定义的全局 `app.head.titleTemplate` 正确合并，导致全局模板（如网站后缀）丢失。",
+      "cause": "`definePageMeta` 是一个编译时宏 (Compile-time Macro)，它的值在构建打包阶段被静态地“雕刻”进路由元信息中，倾向于整体替换 (Override) 而非组合 (Compose)。而 `titleTemplate` 的合并逻辑发生在运行时 (Runtime)，由 Unhead 库处理。当 Unhead 发现一个静态设置的完整 `title` 时，它会优先使用该值，而不会再应用模板。相比之下，`useHead` 是一个运行时组合式函数 (Runtime Composable)，它在客户端/服务端渲染时动态地将 `title` 片段提供给 Unhead，Unhead 会识别出这是一个不完整的标题，并主动与其 `titleTemplate` 进行合并。",
+      "solution": "当页面标题需要与全局 `titleTemplate` 结合时，必须使用 `useHead({ title: '页面标题' })` 来提供 `title`。对于其他不需要模板合并的静态元数据（如 `description`, `keywords`, `og:image` 等），仍然推荐使用 `definePageMeta`，因为它在编译时处理，有更好的性能。两者可以且应该结合使用，各司其职。",
+      "code": {
+        "nuxt.config.ts": "export default defineNuxtConfig({ app: { head: { titleTemplate: '%s - Nuxt4 大冒险' } } })",
+        "pages/meta-static.vue (Incorrect for template)": "<script setup>\\ndefinePageMeta({\\n  title: '静态标题' // This will NOT be combined with titleTemplate\\n})\\n</script>",
+        "pages/meta-runtime.vue (Correct for template)": "<script setup>\\nuseHead({\\n  title: '运行时标题' // This WILL be combined with titleTemplate\\n})\\n</script>"
+      },
+      "verified": true,
+      "tags": ["Nuxt4", "SEO", "meta", "unhead", "definePageMeta", "useHead", "titleTemplate"],
+      "sources": [
+        "实践经验与对比实验",
+        "nuxt4-knowledge/018-Nuxt4-SEO优化与Meta标签管理.md"
+      ],
+      "lastUpdated": "2024-07-31"
     }
   ]
 }
