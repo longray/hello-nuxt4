@@ -124,6 +124,39 @@ const { data: settings } = await useAsyncData('site-settings', async () => {
 </script>
 ```
 
+## 黄金实践：与 `@nuxt/content` 模块结合
+
+`@nuxt/content` 是 Nuxt 生态中用于处理 Markdown 和其他内容的强大模块。`useAsyncData` 是与它配合获取内容的**首选方式**。
+
+这种模式将**数据获取**与**内容渲染**彻底分离，让代码更清晰、更易于调试。
+
+**示例：在动态路由页面获取 Markdown 内容**
+
+```vue
+// pages/articles/[...slug].vue
+
+<script setup>
+const route = useRoute()
+
+// 使用 useAsyncData 包装 queryContent 调用
+const { data: page, error } = await useAsyncData(`content-${route.path}`, () => 
+  queryContent('content').where({ _path: route.path }).findOne()
+)
+</script>
+
+<template>
+  <main v-if="page">
+    <h1>{{ page.title }}</h1>
+    <!-- 将获取的数据交由 ContentRenderer 纯粹地渲染 -->
+    <ContentRenderer :value="page" />
+  </main>
+</template>
+```
+
+> **[info] 深入学习**
+> 关于 `@nuxt/content` 的更多最佳实践，请参考我们的专题知识文档：
+> `021-Nuxt4-模块-@nuxt_content最佳实践.md`
+
 ## 常见坑点与注意事项
 -   **`await` 的重要性**: 在 `setup` 中使用 `useFetch` 或 `useAsyncData` 时，务必配合 `await`。这会确保在服务端完成数据获取之前，不会发送页面响应，这是实现 SSR 的关键。
 -   **唯一 Key**: `useAsyncData` 的 key 必须是唯一的。如果多个地方使用相同的 key，它们将共享同一份数据。`useFetch` 会根据 URL 和参数自动生成一个唯一的 key。

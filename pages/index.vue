@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { data: articles } = await useAsyncData(() => queryCollection('content').all())
-  console.log(articles.value)
+  // console.log(articles.value)
 </script>
 
 <template>
