@@ -13,5 +13,5 @@ export default defineNuxtConfig({
   // ],
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/test-utils', '@nuxt/eslint', '@pinia/nuxt']
+  modules: ['@nuxt/test-utils', '@nuxt/eslint', '@pinia/nuxt', '@nuxt/content']
 })
