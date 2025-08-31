@@ -1,13 +1,15 @@
 <script setup lang="ts">
-const { data: home } = await useAsyncData(() => queryCollection('content').path('/').first())
-
-useSeoMeta({
-  title: home.value?.title,
-  description: home.value?.description
-})
+const { data: articles } = await useAsyncData(() => queryCollection('content').all())
+  console.log(articles.value)
 </script>
 
 <template>
-  <ContentRenderer v-if="home" :value="home" />
-  <div v-else>Home not found</div>
+  <div>
+    <h1>文章列表</h1>
+    <ul>
+      <li v-for="article in articles" :key="article.path">
+        <NuxtLink :to="article.path">{{ article.title }}</NuxtLink>
+      </li>
+    </ul>
+  </div>
 </template>
