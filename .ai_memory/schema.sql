@@ -47,3 +47,10 @@ CREATE TABLE IF NOT EXISTS issue_sources (
     PRIMARY KEY (issue_id, source), -- 复合主键
     FOREIGN KEY (issue_id) REFERENCES issues(id) ON DELETE CASCADE -- 外键关联，并级联删除
 );
+
+-- 数据库版本表: 用于跟踪和管理数据库 schema 的版本演进
+CREATE TABLE IF NOT EXISTS schema_version (
+    version INTEGER PRIMARY KEY, -- 版本号
+    applied TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 应用该版本的时间
+    description TEXT NOT NULL -- 记录版本变更说明
+);
