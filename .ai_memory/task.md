@@ -1,18 +1,12 @@
-# ✅ 当前任务计划：状态管理 (State Management)
+# ✅ 当前任务计划（task.md）
 
 ## 📌 任务列表
-1.  ✅ **安装与配置 Pinia**: 安装 `@pinia/nuxt` 模块，并在 `nuxt.config.ts` 中进行配置。
-    *   **结果与验证**: `package.json` 中已包含依赖，`nuxt.config.ts` 中已添加模块，应用正常启动。
-2.  ✅ **创建第一个 Store**: 创建一个 `stores/counter.ts` 文件，定义一个管理计数器的 store，包含 state、getter 和 action。
-    *   **结果与验证**: `stores/counter.ts` 文件已创建，包含 `state`, `getters`, `actions`，符合 Pinia 规范。
-3.  ✅ **创建交互页面**: 创建 `pages/state.vue` 页面。
-    *   **结果与验证**: `pages/state.vue` 已创建，并成功从 store 中读取状态和调用 actions。
-4.  ✅ **验证基础功能**: 访问 `/state` 页面，验证核心功能。
-    *   **结果与验证**: 页面正确显示初始值 `0`，按钮可正常增减，DevTools 可观察到变化。
-5.  ✅ **探索 SSR 与状态**: 探索 Pinia 在服务端渲染（SSR）下的工作机制。
-    *   **结果与验证**: 通过 `onServerPrefetch` 在服务端调用 action 将初始值设为 `100`，刷新页面直接显示 `100`，验证成功。
-6.  ✅ **任务总结与沉淀**: 总结 Pinia 在 Nuxt 4 中的使用要点。
-    *   **结果与验证**: 任务完成，知识点已总结。
+1.  **设计 `issues` 表结构**：定义 SQLite 表的字段，混合使用原生类型和 JSON 类型，以实现最佳的查询性能和存储灵活性。
+2.  **创建数据库与表**：执行 `sqlite3` 命令，在 `.ai_memory/` 目录下创建 `memory.db` 文件，并根据设计的结构建立 `issues` 表。
+3.  **迁移现有数据**：编写并执行一条或多条命令，读取 `memory.json` 中的 `issues` 数组，并将其中的每条记录插入到新的 `issues` 表中。
+4.  **验证数据迁移**：执行 `SELECT` 查询，随机抽取几条记录，或查询总数，以验证所有数据已成功、完整地迁移到 `memory.db`。
+5.  **更新记忆读写逻辑**：(概念性) 调整未来的工作流程，将记忆的读取和写入操作从文件读写切换为 `sqlite3` 命令。
+6.  **清理旧记忆文件**：在确认新数据库工作正常后，将 `memory.json` 重命名为 `memory.json.bak` 作为备份。
 
 ## 🧾 状态更新机制
 - 每完成一项任务，标记 ✅ 并简要总结“结果 + 验证方式 + 关联 issueId”
