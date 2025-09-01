@@ -85,3 +85,66 @@ if (error.value || !page.value) {
 - **逻辑耦合**: 将数据获取逻辑和模板渲染逻辑耦合在同一个组件中，违背了关注点分离的原则。
 
 **结论**：为了代码的长期可维护性和健壮性，**强烈建议优先使用 `useAsyncData` + `<ContentRenderer />` 的显式模式**，仅在非常简单的、一次性的场景下，或者在完全理解其内部机制后，才考虑使用 `<ContentDoc />`。
+
+---
+
+## V3+ 核心：`queryCollection` vs `queryContent`
+
+这是 Nuxt Content v3 版本之后最重要的概念变化，理解它们的区别是高效、正确使用此模块的关键。
+
+### `queryContent()`: 通用文件路径查询器
+
+- **核心思想**: 把它想象成一个直接作用于 `content/` 目录的、带高级过滤功能的“文件系统搜索工具”（类似 `ls` 或 `find` 命令）。
+- **查询目标**: **文件路径**。例如 `queryContent('articles', 'nuxt3')` 查询的是 `content/articles/nuxt3/` 目录。
+- **适用场景**:
+    1.  简单的、无需结构化分类的内容项目。
+    2.  需要基于文件和目录路径进行灵活查询的场景。
+    3.  这是从 v2 延续下来的主要查询方式，具有向后兼容性。
+
+### `queryCollection()`: 结构化集合查询器 (v3+ 最佳实践)
+
+- **核心思想**: 引入了“集合 (Collection)”的概念，把它想象成在操作一个预定义了数据结构（Schema）的“数据库表”（类似 SQL 的 `SELECT FROM table`）。这是从“文件思维”到“数据思维”的转变。
+- **查询目标**: **集合名称**。你需要在 `nuxt.config.ts` 中通过 `content.collections` 预先定义好一个或多个集合。
+- **适用场景**:
+    1.  结构化的、类型明确的内容项目（如博客、文档、产品等）。
+    2.  希望利用 `page` 和 `data` 类型分离内容，并进行数据校验的场景。
+    3.  **这是 Nuxt Content v3+ 官方推荐的最佳实践**。
+
+### 关键“陷阱”：未定义集合的降级行为 (Fallback)
+
+当 `queryCollection()` 接收到一个**未在 `nuxt.config.ts` 中定义的集合名**时（例如我们之前使用的 `queryCollection('content')`），它会**降级 (fallback)** 到类似 `queryContent()` 的行为，去查找 `content/<集合名>/` 目录。
+
+这就是为什么我们之前会收到警告 `No content collection found for "content". Falling back to default collection.`，因为它找不到名为 `content` 的集合定义，于是尝试按文件路径规则去查找，最终产生了这个兼容性行为。
+
+### 服务端 (Nitro) 用法
+
+- **结论**: **可以直接使用 `queryCollection()`，且这是 v3+ 的唯一推荐方式**。
+- **历史**: v2 中的 `serverQueryContent` 和 `#content/server` 导入方式已被废弃。
+- **示例 (`server/api/posts.get.ts`)**:
+
+```typescript
+// 1. 首先在 nuxt.config.ts 中定义集合
+// export default defineNuxtConfig({
+//   content: {
+//     collections: {
+//        // 定义一个名为 'posts' 的集合
+//        posts: {
+//          type: 'page',
+//          source: 'content/posts'
+//        }
+//      }
+//   }
+// })
+
+// 2. 然后在 API 路由中直接查询
+export default defineEventHandler(async (event) => {
+  const posts = await queryCollection('posts')
+    .only(['title', '_path'])
+    .sort({ date: -1 })
+    .find()
+
+  return posts
+})
+```
+
+**总结**: 优先使用 `queryCollection` 并始终在 `nuxt.config.ts` 中明确定义你的集合，这会让你的项目结构更清晰、数据流更可预测。

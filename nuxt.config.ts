@@ -8,6 +8,7 @@ export default defineNuxtConfig({
       ]
     }
   },
+  content: {},
   // extends: [
   //   '@nuxt/examples-ui',
   // ],
